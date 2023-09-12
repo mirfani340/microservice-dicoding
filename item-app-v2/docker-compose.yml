@@ -24,7 +24,7 @@ services:
     # Menggunakan build dari Dockerfile-item-app
     build:
       context: .        # Build context di current directory
-      dockerfile: Dockerfile-item-app  # Nama Dockerfile-tem-app
+      dockerfile: Dockerfile  # Menjalankan build dari Dockerfile
     networks:
       - dicoding-devops
     ports:
