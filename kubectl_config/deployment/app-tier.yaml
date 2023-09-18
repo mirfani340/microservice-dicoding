@@ -44,3 +44,9 @@ spec:
             #   Port: <all_caps_service_name>_SERVICE_PORT
             #   Named Port: <all_caps_service_name>_SERVICE_PORT_<all_caps_port_name>
             value: redis://$(DATA_TIER_SERVICE_HOST):$(DATA_TIER_SERVICE_PORT_REDIS)
+            # Update regarding changes on app-tier-secret.yaml 
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: app-tier-secret
+                key: password

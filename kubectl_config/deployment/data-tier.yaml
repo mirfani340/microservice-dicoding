@@ -37,3 +37,17 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 6379
+        command:
+          - redis-server
+          - /etc/redis/redis.conf
+        volumeMounts:
+          - mountPath: /etc/redis
+            name: config
+      volumes:
+        - name: config
+          configMap:
+            name: redis-config
+            items:
+            - key: config
+              path: redis.conf
+
