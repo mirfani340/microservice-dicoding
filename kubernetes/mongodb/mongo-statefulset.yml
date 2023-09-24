@@ -1,61 +1,62 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongo
-  namespace: karsajobs-ns
+  name: mongo # Name of the StatefulSet.
+  namespace: karsajobs-ns # Namespace where the StatefulSet will be created.
   labels:
-    app: mongo
+    app: mongo # Labeling the StatefulSet with "app: mongo."
+
 spec:
   selector:
     matchLabels:
-      app: mongo
-  serviceName: mongo
+      app: mongo # Selects Pods with the label "app: mongo."
 
-  minReadySeconds: 10
+  serviceName: mongo # Specifies the name of the associated Service.
 
-  replicas: 1
+  minReadySeconds: 10 # Specifies the minimum time a Pod must be ready before considering it healthy.
+
+  replicas: 1 # Specifies that there should be 1 replica of the StatefulSet.
+
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongo # Labels the Pods created by this template with "app: mongo."
     spec:
+      terminationGracePeriodSeconds: 10 # Specifies the grace period for Pod termination.
 
-      terminationGracePeriodSeconds: 10
-      
       containers:
-      - name: mongo
-        image: mongo:3
-        imagePullPolicy: IfNotPresent
+      - name: mongo # Name of the container.
+        image: mongo:3 # Specifies the container image to use.
+        imagePullPolicy: IfNotPresent # Defines the image pull policy.
 
         env:
         - name: MONGO_INITDB_ROOT_USERNAME_FILE
-          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
+          value: /etc/mongo-credentials/MONGO_ROOT_USERNAME # Specifies the path to the root username file.
         - name: MONGO_INITDB_ROOT_PASSWORD_FILE
-          value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
+          value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD # Specifies the path to the root password file.
 
         ports:
-        - containerPort: 27017
+        - containerPort: 27017 # Exposes port 27017 in the container.
           name: mongo
 
         volumeMounts:
         - name: mongo-persistent-storage
-          mountPath: /data/db
+          mountPath: /data/db # Mounts the persistent storage volume to /data/db.
         - name: mongo-config
-          mountPath: /config
+          mountPath: /config # Mounts a config map volume to /config.
         - name: mongo-secret
-          mountPath: /etc/mongo-credentials
+          mountPath: /etc/mongo-credentials # Mounts a secret volume to /etc/mongo-credentials.
 
       volumes:
       - name: mongo-persistent-storage
         persistentVolumeClaim:
-          claimName: mongo-pv-claim
+          claimName: mongo-pv-claim # Specifies the PersistentVolumeClaim to use for persistent storage.
       - name: mongo-config
         configMap:
-          name: mongo-config
+          name: mongo-config # Specifies the ConfigMap to use for configuration.
           items: 
             - key: mongo.conf
               path: mongo.conf
       - name: mongo-secret  
         secret:
-          secretName: mongo-secret
-
+          secretName: mongo-secret # Specifies the Secret to use for credentials.

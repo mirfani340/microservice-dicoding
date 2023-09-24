@@ -1,32 +1,31 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv
-  namespace: karsajobs-ns
+  name: mongo-pv # Name of the PersistentVolume.
+  namespace: karsajobs-ns # Namespace where the PersistentVolume will be created.
   labels:
-    type: local
+    type: local # Labeling the PersistentVolume with "type: local."
+
 spec:
   capacity:
-    storage: 1Gi
+    storage: 1Gi # Specifies the storage capacity of the PersistentVolume.
   accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: manual
+    - ReadWriteOnce # Specifies that the volume can be mounted in read-write mode by a single node.
+  persistentVolumeReclaimPolicy: Recycle # Specifies that the PersistentVolume should be recycled when released.
+  storageClassName: manual # Specifies the storage class name for the PersistentVolume.
   hostPath:
-    path: "/data/db"
-
+    path: "/data/db" # Specifies the host path where the volume is physically located.
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pv-claim
-  namespace: karsajobs-ns
+  name: mongo-pv-claim # Name of the PersistentVolumeClaim.
+  namespace: karsajobs-ns # Namespace where the PersistentVolumeClaim will be created.
+
 spec:
-  storageClassName: manual
+  storageClassName: manual # Specifies the storage class name for the PersistentVolumeClaim.
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Gi # Specifies the requested storage capacity for the PersistentVolumeClaim.
   accessModes:
-    - ReadWriteOnce
-
+    - ReadWriteOnce # Specifies that the volume can be mounted in read-write mode by a single node.

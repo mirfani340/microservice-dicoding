@@ -1,13 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-service
-  namespace: karsajobs-ns
+  name: mongo-service # Name of the Service.
+  namespace: karsajobs-ns # Namespace where the Service will be created.
   labels:
-    app: mongo
+    app: mongo # Labeling the Service with "app: mongo."
+
 spec:
   selector:
-    app: mongo
+    app: mongo # Selects Pods with the label "app: mongo" to route traffic to.
+
   ports:
-  - port: 27017
-  clusterIP: None
+  - port: 27017 # The port on which the Service will listen internally within the cluster.
+  clusterIP: None # Specifies that this Service should not have a cluster IP and is not accessible via ClusterIP.
