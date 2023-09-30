@@ -1,0 +1,15 @@
+{
+  "name": "microservice-dicoding",
+  "version": "1.0.0",
+  "description": "This is branch for dicoding devops expert, especially for service asyncronous communication module",
+  "main": "consumer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
